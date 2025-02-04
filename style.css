@@ -1,0 +1,67 @@
+html * {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+p, h1, h2, h3, h4 {
+    margin: 0;
+}
+
+body {
+    margin: 0;
+}
+
+.content {
+    display: flex;
+    gap: 2.5rem;
+    margin: 2.5rem;
+    height: calc(100vh - 5rem);
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+.maze {
+    flex-grow: 0;
+    min-width: max-content;
+    width: min(calc(75vw - 10rem - 2px), calc(100vh - 10rem - 2px));
+    height: min(calc(75vw - 10rem - 2px), calc(100vh - 10rem - 2px));
+    border-collapse: collapse;
+    outline: 1px black solid;
+
+}
+
+.settings {
+    flex: 1;
+    text-align: justify;
+    padding-right: 2.5rem;
+}
+
+.settings * {
+    margin-bottom: 1rem;
+}
+
+.pointer, .pointer label {
+    cursor: pointer;
+}
+
+.fa::before {
+    margin-right: 1ch;
+}
+
+code {
+    background-color: rgb(190, 188, 188);
+    padding: 2px 4px;
+    border-radius: 25%;
+}
+
+input {
+    margin: 0;
+    margin-right: 1ch;
+}
