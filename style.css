@@ -2,7 +2,7 @@ html * {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-p, h1, h2, h3, h4 {
+p, h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
@@ -27,13 +27,36 @@ body {
 
 }
 
+.maze-complete div {
+    width: 100%;
+    margin-block: 0;
+}
+
+.maze-complete {
+    position:absolute;
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(172, 168, 168, 0.596);
+}
+
+
+.fade-enter {
+    transition: opacity ease-in-out 1s;
+    opacity: 1;
+}
+
 .maze {
     flex-grow: 0;
     min-width: max-content;
     width: min(calc(75vw - 10rem - 2px), calc(100vh - 10rem - 2px));
     height: min(calc(75vw - 10rem - 2px), calc(100vh - 10rem - 2px));
     border-collapse: collapse;
-    outline: 1px black solid;
+    /* outline: 1px black solid; */
 
 }
 
@@ -51,13 +74,17 @@ body {
     cursor: pointer;
 }
 
+#diff-slider {
+    width: 5rem;
+}
+
 .fa::before {
     margin-right: 1ch;
 }
 
 code {
     background-color: rgb(190, 188, 188);
-    padding: 2px 4px;
+    padding: 1px 2px;
     border-radius: 25%;
 }
 
