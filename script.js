@@ -24,6 +24,7 @@ class Cell {
         this.down = false;
         this.vis = false;
         this.visited = false;
+        this.hinted = false;
     }
     getReal(){
         this.real = document.getElementById(`${this.x}/${this.y}`);
@@ -54,19 +55,11 @@ class Cell {
     leave(){
         this.real.style['background-color'] = 'rgba(250, 169, 95, 10)';
     }
-    visit(){
-        this.visited = true;
-        this.real.style['background-color'] = 'lime';
-    }
-    unvisit(){
-        this.visited = false;
+    refreshColor(){
         this.real.style['background-color'] = 'white';
-    }
-    refreshCurrentLocation(){
-        this.real.style['background-color'] = (this.visited) ? 'lime' : 'white';
-    }
-    currentLocation(){
-        this.real.style['background-color'] = 'red';
+        if(this.hinted) this.real.style['background-color'] = 'gold';
+        if(this.visited) this.real.style['background-color'] = 'lime';
+        if(this.x == playerPosX && this.y == playerPosY) this.real.style['background-color'] = 'red';
     }
 }
 
@@ -143,10 +136,50 @@ function dfs() {
     curCell.leave();
 }
 
+let historyX = [];
+let historyY = [];
 let playerPosX = 0;
 let playerPosY = 0;
 let recur = undefined;
+let hintInterval = undefined;
 let mazeFinished = false;
+let hints = [];
+
+function cacheHint(x, y, pv) {
+    let curCell = getCell(x, y);
+    if(x == countCol - 1 && y == countRow - 1){
+        return [curCell];
+    }
+    if(curCell.up && pv != 2){
+        let ret = cacheHint(x, y - 1, 0);
+        if(ret != undefined){
+            ret.push(curCell);
+            return ret;
+        }
+    }
+    if(curCell.right && pv != 3){
+        let ret = cacheHint(x + 1, y, 1);
+        if(ret != undefined){
+            ret.push(curCell);
+            return ret;
+        }
+    }
+    if(curCell.down && pv != 0){
+        let ret = cacheHint(x, y + 1, 2);
+        if(ret != undefined){
+            ret.push(curCell);
+            return ret;
+        }
+    }
+    if(curCell.left && pv != 1){
+        let ret = cacheHint(x - 1, y, 3);
+        if(ret != undefined){
+            ret.push(curCell);
+            return ret;
+        }
+    }
+    return undefined;
+}
 
 function onMazeFinish() {
     for(let x = 0; x < countCol; x++){
@@ -157,10 +190,16 @@ function onMazeFinish() {
     cells['0,0'].openCell(0);
     cells['0,0'].up = false;
     cells[`${countCol - 1},${countRow - 1}`].openCell(2);
-    cells['0,0'].visit();
-    cells['0,0'].currentLocation();
+    historyX = [0];
+    historyY = [0];
     playerPosX = 0;
     playerPosY = 0;
+    cells['0,0'].visited = true;
+    cells['0,0'].refreshColor();
+    let temp = cacheHint(0, 0, -1);
+    for(let i = 0; i < temp.length; i++){
+        hints.push(temp[temp.length - i - 1]);
+    }
 }
 
 let skipAnimation = false;
@@ -169,20 +208,19 @@ function skipAnimChange() {
     skipAnimation = !skipAnimation;
 }   
 
+diffSlider.value = 2;
+
 function diffChange() {
     if(diffSlider.value == 1){
-        countRow = 4;
-        diffSlider.style['accentColor'] = 'lime';
-    } else if(diffSlider.value == 2){
         countRow = 8;
         diffSlider.style['accentColor'] = 'lime';
-    } else if(diffSlider.value == 3){
+    } else if(diffSlider.value == 2){
         countRow = 16;
-        diffSlider.style['accentColor'] = 'aqua ';
-    } else if(diffSlider.value == 4){
+        diffSlider.style['accentColor'] = 'aqua';
+    } else if(diffSlider.value == 3){
         countRow = 32;
-        diffSlider.style['accentColor'] = 'yellow';
-    } else {
+        diffSlider.style['accentColor'] = 'yellow ';
+    } else if(diffSlider.value == 4){
         countRow = 64;
         diffSlider.style['accentColor'] = 'red';
     }
@@ -193,9 +231,14 @@ function diffChange() {
 function startMaze() {
     mazeComplete.classList.remove('fade-enter');
     mazeFinished = false;
+    hints = [];
     if(recur != undefined){
         clearInterval(recur);
         recur = undefined;
+    }
+    if(hintInterval != undefined){
+        clearInterval(hintInterval);
+        hintInterval = undefined;
     }
     startX = Math.floor(Math.random() * countCol);
     startY = Math.floor(Math.random() * countRow);
@@ -232,49 +275,93 @@ function onMazeComplete() {
     mazeComplete.classList.add('fade-enter');
 }
 
+function clearHint() {
+    for(let i = 0; i < hints.length; i++){
+        hints[i].hinted = false;
+        hints[i].refreshColor();
+    }
+}
+
+function playHint() {
+    if(!mazeFinished){
+        return;
+    }
+    let hintCounter = 0;
+    if(hintInterval != undefined){
+        clearInterval(hintInterval);
+    }
+    hintInterval = setInterval(() => {
+        if(hintCounter < hints.length){
+            hints[hintCounter].hinted = true;
+            hints[hintCounter].real.style['background-color'] = 'gold';
+        }
+        if(hintCounter >= 20){
+            hints[hintCounter - 20].refreshColor();
+        }
+        hintCounter++;
+        if(hintCounter == hints.length + 20){
+            clearInterval(hintInterval);
+            setTimeout(clearHint, 2000);
+        }
+    }, 10);
+}
+
 function checkShortcuts(e) {
     if(e.key == 'r'){
         startMaze();
     } else if(e.key == 'x'){
         skipAnimChange();
         document.getElementById('skip-anim').checked = !(document.getElementById('skip-anim').checked);
+    } else if(e.key == 'p'){
+        playHint();
     }
 }
 
 function checkPlayerActions(e) {
-    let lastX = playerPosX;
-    let lastY = playerPosY;
     if(e.key == 'w' || e.keyCode == 38){
         if(cells[`${playerPosX},${playerPosY}`].up){
             playerPosY--;
+        } else {
+            return;
         }
     } else if(e.key == 'a' || e.keyCode == 37){
         if(cells[`${playerPosX},${playerPosY}`].left){
             playerPosX--;
+        } else {
+            return;
         }
     } else if(e.key == 's' || e.keyCode == 40){
         if(cells[`${playerPosX},${playerPosY}`].down){
             playerPosY++;
+        } else {
+            return;
         }
     } else if(e.key == 'd' || e.keyCode == 39){
         if(cells[`${playerPosX},${playerPosY}`].right){
             playerPosX++;
+        } else {
+            return;
         }
-    }
-    if(playerPosY == countRow){
-        onMazeComplete();
-
+    } else {
         return;
     }
-    
-    if(cells[`${playerPosX},${playerPosY}`].visited == true){
-        if(playerPosX == lastX && playerPosY == lastY) return;
-        cells[`${lastX},${lastY}`].unvisit();
-    } else {
-        cells[`${playerPosX},${playerPosY}`].visit();
+    if(playerPosY == countRow){
+        cells[`${countCol - 1},${countRow - 1}`].refreshColor();
+        onMazeComplete();
+        return;
     }
-    cells[`${lastX},${lastY}`].refreshCurrentLocation();
-    cells[`${playerPosX},${playerPosY}`].currentLocation();
+    if(historyX.length > 1 && historyX[historyX.length - 2] == playerPosX && historyY[historyY.length - 2] == playerPosY){
+        cells[`${historyX[historyX.length - 1]},${historyY[historyY.length - 1]}`].visited = false;
+        cells[`${historyX[historyX.length - 1]},${historyY[historyY.length - 1]}`].refreshColor();
+        historyX.pop();
+        historyY.pop();
+    } else {
+        cells[`${historyX[historyX.length - 1]},${historyY[historyY.length - 1]}`].refreshColor();
+        historyX.push(playerPosX);
+        historyY.push(playerPosY);
+    }
+    cells[`${playerPosX},${playerPosY}`].visited = true;
+    cells[`${playerPosX},${playerPosY}`].refreshColor();
 }
 
 document.addEventListener('keydown', (e) => {
