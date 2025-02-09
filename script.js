@@ -407,6 +407,9 @@ function checkShortcuts(e) {
 }
 
 function checkPlayerActions(e) {
+    if(mazeFinished != true || timesUpStatus == true){
+        return;
+    }
     if(e.key == 'w' || e.keyCode == 38){
         if(cells[`${playerPosX},${playerPosY}`].up){
             playerPosY--;
@@ -455,9 +458,7 @@ function checkPlayerActions(e) {
 
 document.addEventListener('keydown', (e) => {
     checkShortcuts(e);
-    if(mazeFinished == true && timesUpStatus != true){
-        checkPlayerActions(e);
-    }
+    checkPlayerActions(e);
 });
 
 addCells(countCol, countRow);

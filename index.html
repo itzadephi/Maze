@@ -19,10 +19,10 @@
                 </div>
             </div>
             <div class="mobile-movepad">
-                <button class="movepad-button" onclick="checkPlayerActions({key: 's'})"><b>&darr;</b></button>
-                <button class="movepad-button" onclick="checkPlayerActions({key: 'w'})"><b>&uarr;</b></button>
-                <button class="movepad-button" onclick="checkPlayerActions({key: 'a'})"><b>&larr;</b></button>
-                <button class="movepad-button" onclick="checkPlayerActions({key: 'd'})"><b>&rarr;</b></button>
+                <button class="movepad-button" onclick="checkPlayerActions({'key': 'w'})"><b>&uarr;</b></button>
+                <button class="movepad-button" onclick="checkPlayerActions({'key': 's'})"><b>&darr;</b></button>
+                <button class="movepad-button" onclick="checkPlayerActions({'key': 'a'})"><b>&larr;</b></button>
+                <button class="movepad-button" onclick="checkPlayerActions({'key': 'd'})"><b>&rarr;</b></button>
             </div>
         </div>
         <div style="position: relative;">
@@ -44,10 +44,10 @@
             <p class="timer">Waktu tersisa: <span id="time-left"></span></p>
         </div>
         <div class="mobile-movepad2">
-            <button class="movepad-button" onclick="checkPlayerActions({key: 'w'})"><b>&uarr;</b></button>
-            <button class="movepad-button" onclick="checkPlayerActions({key: 'a'})"><b>&larr;</b></button>
-            <button class="movepad-button" onclick="checkPlayerActions({key: 's'})"><b>&darr;</b></button>
-            <button class="movepad-button" onclick="checkPlayerActions({key: 'd'})"><b>&rarr;</b></button>
+            <button class="movepad-button" onclick="checkPlayerActions({'key': 'w'})"><b>&uarr;</b></button>
+            <button class="movepad-button" onclick="checkPlayerActions({'key': 'a'})"><b>&larr;</b></button>
+            <button class="movepad-button" onclick="checkPlayerActions({'key': 's'})"><b>&darr;</b></button>
+            <button class="movepad-button" onclick="checkPlayerActions({'key': 'd'})"><b>&rarr;</b></button>
         </div>
         <div class="settings" draggable="false">
             <p class="move-guide">Gunakan <code>W</code> <code>A</code> <code>S</code> <code>D</code> atau <code>&uarr;</code> <code>&larr;</code> <code>&darr;</code> <code>&rarr;</code> untuk bergerak.</p>
@@ -76,6 +76,6 @@
     </div>
     
 </body>
-<script></script>
+<style></style>
 <script src="script.js"></script>
 </html>
