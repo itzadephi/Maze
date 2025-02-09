@@ -118,12 +118,13 @@ input {
     justify-content: center;
     gap: 1rem;
     margin-top: 2rem;
+    flex-wrap: wrap;
 }
 
 .movepad-button {
     padding: 0;
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     background-color: white;
     border: 1px solid rgb(70, 68, 68);
 }
@@ -150,13 +151,7 @@ input {
         margin-top: .5rem;
         margin-bottom: 2.5rem;
     }
-    .game-logo {
-        width: 64px;
-        height: 64px;
-    }
-    .game-credit {
-        font-size: x-small;
-    }
+    
     .game-logo {
         transform: translateY(.25ch);
     }
@@ -185,21 +180,25 @@ input {
     .settings {
         font-size: small;
     }
+
+    .game-logo {
+        width: 64px;
+        height: 64px;
+    }
+    .game-credit {
+        font-size: x-small;
+    }
 }
 
 @media (pointer: coarse) and (orientation: landscape) {
-    .game-logo {
-        width: 128px;
-        height: 128px;
-    }
-    .game-credit {
-        font-size: small;
-    }
     .settings {
         padding-right: 0;
     }
     .mobile-movepad {
         display: flex;
+    }
+    .leftside {
+        min-width: 7rem;
     }
 }
 
