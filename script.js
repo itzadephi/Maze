@@ -1,6 +1,9 @@
 let maze = document.querySelector('.maze');
 let mazeComplete = document.querySelector('.maze-complete');
+let timesUp = document.querySelector('.times-up');
 let diffSlider = document.getElementById('diff-slider');
+let showHint = document.getElementById('show-hint');
+let timer = document.querySelector('.timer');
 
 let mazeWidth = maze.getBoundingClientRect().width;
 let mazeHeight = maze.getBoundingClientRect().height;
@@ -58,7 +61,7 @@ class Cell {
     refreshColor(){
         this.real.style['background-color'] = 'white';
         if(this.hinted) this.real.style['background-color'] = 'gold';
-        if(this.visited) this.real.style['background-color'] = 'lime';
+        if(this.visited && showTrail) this.real.style['background-color'] = 'lime';
         if(this.x == playerPosX && this.y == playerPosY) this.real.style['background-color'] = 'red';
     }
 }
@@ -181,6 +184,31 @@ function cacheHint(x, y, pv) {
     return undefined;
 }
 
+let timerInterval = undefined;
+
+function startTimer(time) {
+    if(timerInterval != undefined){
+        clearInterval(timerInterval);
+        timerInterval = undefined;
+    }
+    document.getElementById('time-left').innerHTML = `${time} detik`;
+    document.getElementById('time-left').style['color'] = 'black';
+    timerInterval = setInterval(() => {
+        time--;
+        document.getElementById('time-left').innerHTML = `${time} detik`;
+        if(time <= 10){
+            document.getElementById('time-left').style['color'] = 'red';
+        }
+        if(time == 0){
+            clearInterval(timerInterval);
+            timerInterval = undefined;
+            if(timedMode){
+                onTimesUp();
+            }
+        }
+    }, 1000);
+}
+
 function onMazeFinish() {
     for(let x = 0; x < countCol; x++){
         for(let y = 0; y < countRow; y++){
@@ -196,6 +224,16 @@ function onMazeFinish() {
     playerPosY = 0;
     cells['0,0'].visited = true;
     cells['0,0'].refreshColor();
+    let diff = document.getElementById('diff-slider').value;
+    if(diff == 1){
+        startTimer(10);
+    } else if(diff == 2){
+        startTimer(30);
+    } else if(diff == 3){
+        startTimer(60);
+    } else if(diff == 4){   
+        startTimer(300);
+    }
     let temp = cacheHint(0, 0, -1);
     for(let i = 0; i < temp.length; i++){
         hints.push(temp[temp.length - i - 1]);
@@ -203,10 +241,19 @@ function onMazeFinish() {
 }
 
 let skipAnimation = false;
+let showTrail = true;
+let timedMode = false;
 
 function skipAnimChange() {
     skipAnimation = !skipAnimation;
-}   
+}
+
+function showTrailChange() {
+    showTrail = !showTrail;
+    for(let i = 0; i < historyX.length; i++){
+        cells[`${historyX[i]},${historyY[i]}`].refreshColor();
+    }
+}
 
 diffSlider.value = 2;
 
@@ -228,8 +275,22 @@ function diffChange() {
     startMaze();
 }
 
+function timedModeChange() {
+    timedMode = !timedMode;
+    if(timedMode){
+        timer.style['display'] = 'block';
+        startMaze();
+    } else {
+        timer.style['display'] = 'none';
+    }
+}
+
+let timesUpStatus = false;
+
 function startMaze() {
+    timesUpStatus = false;
     mazeComplete.classList.remove('fade-enter');
+    timesUp.classList.remove('fade-enter');
     mazeFinished = false;
     hints = [];
     if(recur != undefined){
@@ -239,6 +300,11 @@ function startMaze() {
     if(hintInterval != undefined){
         clearInterval(hintInterval);
         hintInterval = undefined;
+    }
+    if(timerInterval != undefined){
+        clearInterval(timerInterval);
+        timerInterval = undefined;
+        document.getElementById('time-left').innerHTML = '';
     }
     startX = Math.floor(Math.random() * countCol);
     startY = Math.floor(Math.random() * countRow);
@@ -273,6 +339,16 @@ function startMaze() {
 function onMazeComplete() {
     mazeComplete.style['visibility'] = 'visible';
     mazeComplete.classList.add('fade-enter');
+    if(timerInterval != undefined){
+        clearInterval(timerInterval);
+        timerInterval = undefined;
+    }
+}
+
+function onTimesUp() {
+    timesUp.style['visibility'] = 'visible';
+    timesUp.classList.add('fade-enter');
+    timesUpStatus = true;
 }
 
 function clearHint() {
@@ -280,6 +356,7 @@ function clearHint() {
         hints[i].hinted = false;
         hints[i].refreshColor();
     }
+    hintInterval = undefined;
 }
 
 function playHint() {
@@ -288,7 +365,7 @@ function playHint() {
     }
     let hintCounter = 0;
     if(hintInterval != undefined){
-        clearInterval(hintInterval);
+        return;
     }
     hintInterval = setInterval(() => {
         if(hintCounter < hints.length){
@@ -314,6 +391,18 @@ function checkShortcuts(e) {
         document.getElementById('skip-anim').checked = !(document.getElementById('skip-anim').checked);
     } else if(e.key == 'p'){
         playHint();
+    } else if(e.key == 't'){
+        timedModeChange();
+        document.getElementById('timed-mode').checked = !(document.getElementById('timed-mode').checked);
+    } else if(e.key == 'l'){
+        showTrailChange();
+        document.getElementById('show-trail').checked = !(document.getElementById('show-trail').checked);
+    } else if(e.key == '+'){
+        document.getElementById('diff-slider').value++;
+        diffChange();
+    } else if(e.key == '-'){
+        document.getElementById('diff-slider').value--;
+        diffChange();
     }
 }
 
@@ -366,7 +455,7 @@ function checkPlayerActions(e) {
 
 document.addEventListener('keydown', (e) => {
     checkShortcuts(e);
-    if(mazeFinished == true){
+    if(mazeFinished == true && timesUpStatus != true){
         checkPlayerActions(e);
     }
 });

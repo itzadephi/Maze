@@ -3,42 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="vieDport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maze Generator</title>
     <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <div class="content">
-        <div class="title">
-            <img class="game-logo" src="https://cbx-prod.b-cdn.net/COLOURBOX33026571.jpg?width=800&height=800&quality=70" width="128" height="128">
-            <h1>Maze Game</h1>
-            <h3>by Putra Adnyana</h3>
+        <div class="leftside">
+            <div class="title">
+                <img class="game-logo" src="https://cbx-prod.b-cdn.net/COLOURBOX33026571.jpg?width=800&height=800&quality=70" width="128" height="128">
+                <div class="game-credit">
+                    <h1>Maze Game</h1>
+                    <h3>by Putra Adnyana</h3>
+                </div>
+            </div>
+            <div class="mobile-movepad">
+                <button class="movepad-button" onclick="checkPlayerActions({key: 'a'})"><b>&larr;</b></button>
+                <button class="movepad-button" onclick="checkPlayerActions({key: 'w'})"><b>&uarr;</b></button>
+                <button class="movepad-button" onclick="checkPlayerActions({key: 's'})"><b>&darr;</b></button>
+                <button class="movepad-button" onclick="checkPlayerActions({key: 'd'})"><b>&rarr;</b></button>
+            </div>
         </div>
         <div style="position: relative;">
             <div class="maze-complete">
                 <div>
-                    <h3>Labirin Diselesaikan</h3>
-                    <h6>Mantap</h6>
+                    <h2><span class="fa fa-flag-o"></span> Labirin Diselesaikan <span class="fa fa-flag-o"></span></h2>
+                    <h4>Ketuk untuk mulai lagi</h4>
+                </div>
+            </div>
+            <div class="times-up">
+                <div>
+                    <h2><span class="fa fa-clock-o"></span> Waktu Habis <span class="fa fa-clock-o"></span></h2>
+                    <h4>Ketuk untuk mulai lagi</h4>
                 </div>
             </div>
             <table class="maze">
                 
             </table>
+            <p class="timer">Waktu tersisa: <span id="time-left"></span></p>
         </div>
-        <div class="settings">
-            <p>Gunakan <code>W</code> <code>A</code> <code>S</code> <code>D</code> atau <code>&uarr;</code> <code>&larr;</code> <code>&darr;</code> <code>&rarr;</code> untuk bergerak.</p>
-            
-            <input id="diff-slider" style="accent-color: aqua;" type="range" min="1" max="4" step="1" onchange="diffChange()">Dimensi labirin</input>
+        <div class="mobile-movepad2">
+            <button class="movepad-button" onclick="checkPlayerActions({key: 'a'})"><b>&larr;</b></button>
+            <button class="movepad-button" onclick="checkPlayerActions({key: 'w'})"><b>&uarr;</b></button>
+            <button class="movepad-button" onclick="checkPlayerActions({key: 's'})"><b>&darr;</b></button>
+            <button class="movepad-button" onclick="checkPlayerActions({key: 'd'})"><b>&rarr;</b></button>
+        </div>
+        <div class="settings" draggable="false">
+            <p class="move-guide">Gunakan <code>W</code> <code>A</code> <code>S</code> <code>D</code> atau <code>&uarr;</code> <code>&larr;</code> <code>&darr;</code> <code>&rarr;</code> untuk bergerak.</p>
             <br>
+
+            <input id="diff-slider" style="accent-color: aqua;" type="range" min="1" max="4" step="1" onchange="diffChange()">Tingkat Kesulitan</input>
+            <br>
+            <br>
+
             <input id="skip-anim" class="pointer" type="checkbox" onchange="skipAnimChange()"><label for="skip-anim">Lewati animasi</label></option>
+            <br>
+            <br>
+
+            <input id="show-trail" class="pointer" type="checkbox" onchange="showTrailChange()" checked><label for="show-trail">Tampilkan jejak</label></a>
+            <br>
+            <br>
+
+            <input id="timed-mode" class="pointer" type="checkbox" onchange="timedModeChange()"><label for="timed-mode">Mode waktu</label></input>
+            <br>
+            <br>
             
-            <a class="fa fa-play-circle pointer" style="display: block;" id="show-hint" onclick="playHint()"><label for="show-hint">Putar bantuan</label></a>
-
-            <a class="fa fa-refresh pointer" style="display: block;" id="restart" onclick="startMaze()"><label for="restart">Mulai ulang</label></a>
+            <a class="fa fa-play-circle pointer" style="display: block;" id="show-hint" onclick="playHint()" draggable="false"><label for="show-hint">Putar bantuan</label></a>
+            <br>
+            <a class="fa fa-refresh pointer" style="display: block;" id="restart" onclick="startMaze()" draggable="false"><label for="restart">Mulai ulang</label></a>
         </div>
-
     </div>
+    
 </body>
 <script src="script.js"></script>
 </html>
