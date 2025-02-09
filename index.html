@@ -19,9 +19,9 @@
                 </div>
             </div>
             <div class="mobile-movepad">
-                <button class="movepad-button" onclick="checkPlayerActions({key: 'a'})"><b>&larr;</b></button>
-                <button class="movepad-button" onclick="checkPlayerActions({key: 'w'})"><b>&uarr;</b></button>
                 <button class="movepad-button" onclick="checkPlayerActions({key: 's'})"><b>&darr;</b></button>
+                <button class="movepad-button" onclick="checkPlayerActions({key: 'w'})"><b>&uarr;</b></button>
+                <button class="movepad-button" onclick="checkPlayerActions({key: 'a'})"><b>&larr;</b></button>
                 <button class="movepad-button" onclick="checkPlayerActions({key: 'd'})"><b>&rarr;</b></button>
             </div>
         </div>
@@ -44,8 +44,8 @@
             <p class="timer">Waktu tersisa: <span id="time-left"></span></p>
         </div>
         <div class="mobile-movepad2">
-            <button class="movepad-button" onclick="checkPlayerActions({key: 'a'})"><b>&larr;</b></button>
             <button class="movepad-button" onclick="checkPlayerActions({key: 'w'})"><b>&uarr;</b></button>
+            <button class="movepad-button" onclick="checkPlayerActions({key: 'a'})"><b>&larr;</b></button>
             <button class="movepad-button" onclick="checkPlayerActions({key: 's'})"><b>&darr;</b></button>
             <button class="movepad-button" onclick="checkPlayerActions({key: 'd'})"><b>&rarr;</b></button>
         </div>
@@ -74,7 +74,7 @@
             <a class="fa fa-refresh pointer" style="display: block;" id="restart" onclick="startMaze()" draggable="false"><label for="restart">Mulai ulang</label></a>
         </div>
     </div>
+    
 </body>
-<script></script>
 <script src="script.js"></script>
 </html>
