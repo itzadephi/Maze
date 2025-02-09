@@ -200,6 +200,9 @@ input {
     .leftside {
         min-width: 7rem;
     }
+    .timer {
+        top: min(calc(100vw - 5rem - 2px), calc(100vh - 5rem - 2px));
+    }
 }
 
 body *::selection {
