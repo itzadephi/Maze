@@ -301,11 +301,15 @@ function timedModeChange() {
 }
 
 let timesUpStatus = false;
+let hasMaze = false;
 
 function startMaze() {
     timesUpStatus = false;
+    hasMaze = true;
     mazeComplete.classList.remove('fade-enter');
     timesUp.classList.remove('fade-enter');
+    mazeComplete.style['display'] = 'none';
+    timesUp.style['display'] = 'none';
     mazeFinished = false;
     hints = [];
     if(recur != undefined){
@@ -351,8 +355,14 @@ function startMaze() {
     }
 }
 
+function initialStartMaze() {
+    if(hasMaze === false){
+        startMaze();
+    }
+}
+
 function onMazeComplete() {
-    mazeComplete.style['visibility'] = 'visible';
+    mazeComplete.style['display'] = 'flex';
     mazeComplete.classList.add('fade-enter');
     if(timerInterval != undefined){
         clearInterval(timerInterval);
@@ -361,7 +371,7 @@ function onMazeComplete() {
 }
 
 function onTimesUp() {
-    timesUp.style['visibility'] = 'visible';
+    timesUp.style['display'] = 'flex';
     timesUp.classList.add('fade-enter');
     timesUpStatus = true;
 }

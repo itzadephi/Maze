@@ -26,19 +26,19 @@
             </div>
         </div>
         <div style="position: relative;">
-            <div class="maze-complete">
+            <div class="maze-complete" onclick="startMaze()">
                 <div>
                     <h2><span class="fa fa-flag-o"></span> Labirin Diselesaikan <span class="fa fa-flag-o"></span></h2>
                     <h4>Ketuk untuk mulai lagi</h4>
                 </div>
             </div>
-            <div class="times-up">
+            <div class="times-up" onclick="startMaze()">
                 <div>
                     <h2><span class="fa fa-clock-o"></span> Waktu Habis <span class="fa fa-clock-o"></span></h2>
                     <h4>Ketuk untuk mulai lagi</h4>
                 </div>
             </div>
-            <table class="maze">
+            <table class="maze" onclick="initialStartMaze()">
                 
             </table>
             <p class="timer">Waktu tersisa: <span id="time-left"></span></p>
