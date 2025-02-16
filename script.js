@@ -62,7 +62,7 @@ class Cell {
         this.real.style['background-color'] = 'white';
         if(this.hinted) this.real.style['background-color'] = 'gold';
         if(this.visited && showTrail) this.real.style['background-color'] = 'lime';
-        if(this.x == playerPosX && this.y == playerPosY) this.real.style['background-color'] = 'red';
+        if(this.x == playerPosX && this.y == playerPosY) this.real.style['background-color'] = 'var(--player-color)';
     }
 }
 
