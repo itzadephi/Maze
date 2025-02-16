@@ -14,7 +14,6 @@ body {
     margin: 0;
 }
 
-
 .game-logo {
     width: 128px;
     scale: 2;
@@ -23,6 +22,12 @@ body {
 
 .leftside {
     flex: 1;
+}
+
+input[type="button"] {
+    background-color: white;
+    border: none;
+    display: block;
 }
 
 .title {
@@ -94,6 +99,17 @@ body {
     top: min(calc(75vw - 10rem - 2px), calc(100vh - 10rem - 2px));
 }
 
+.landscape-timer {
+    display: none;
+    visibility: hidden;
+    position: absolute;
+    font-size: x-large;
+    left: min(calc(75vw - 2rem - 2px), calc(100vh - 2rem - 2px));
+    top: 0;
+    line-height: 1rem;
+    margin-left: .5rem;
+}
+
 .pointer, .pointer label {
     cursor: pointer;
 }
@@ -149,7 +165,7 @@ input {
         flex-direction: row;
     }
     .timer {
-        top: min(calc(100vw - 5rem - 2px), calc(100vh - 5rem - 2px));
+        top: min(calc(100vw - 2rem - 2px), calc(100vh - 2rem - 2px));
     }
     .maze {
         width: min(calc(100vw - 2rem - 2px), calc(100vh - 2rem - 2px));
@@ -187,6 +203,9 @@ input {
     .game-credit {
         font-size: x-small;
     }
+    .pointer {
+        cursor: unset;
+    }
 }
 
 @media (pointer: coarse) and (orientation: landscape) {
@@ -208,10 +227,17 @@ input {
         min-width: 7rem;
     }
     .timer {
-        top: min(calc(100vw - 5rem - 2px), calc(100vh - 5rem - 2px));
+        visibility: hidden;
+    }
+    .landscape-timer {
+        visibility: visible;
     }
 }
 
 body *::selection {
     background-color: transparent;
+}
+
+.fa::before {
+    font: normal normal normal 14px/1 FontAwesome;
 }

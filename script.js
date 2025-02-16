@@ -191,19 +191,32 @@ function startTimer(time) {
         clearInterval(timerInterval);
         timerInterval = undefined;
     }
-    document.getElementById('time-left').innerHTML = `${time} detik`;
-    document.getElementById('time-left').style['color'] = 'black';
+    let arr = ['time-left', 'hr-time-left'];
+    for(let timeLeft of arr){
+        if(timeLeft == 'time-left'){
+            document.getElementById(timeLeft).innerHTML = `${time} detik`;
+        } else {
+            document.getElementById(timeLeft).innerHTML = `${time}`;
+        }
+        document.getElementById(timeLeft).style['color'] = 'black';
+    }
     timerInterval = setInterval(() => {
         time--;
-        document.getElementById('time-left').innerHTML = `${time} detik`;
-        if(time <= 10){
-            document.getElementById('time-left').style['color'] = 'red';
-        }
-        if(time == 0){
-            clearInterval(timerInterval);
-            timerInterval = undefined;
-            if(timedMode){
-                onTimesUp();
+        for(let timeLeft of ['time-left', 'hr-time-left']){
+            if(timeLeft == 'time-left'){
+                document.getElementById(timeLeft).innerHTML = `${time} detik`;
+            } else {
+                document.getElementById(timeLeft).innerHTML = `${time}`;
+            }
+            if(time <= 10){
+                document.getElementById(timeLeft).style['color'] = 'red';
+            }
+            if(time == 0){
+                clearInterval(timerInterval);
+                timerInterval = undefined;
+                if(timedMode){
+                    onTimesUp();
+                }
             }
         }
     }, 1000);
@@ -279,9 +292,11 @@ function timedModeChange() {
     timedMode = !timedMode;
     if(timedMode){
         timer.style['display'] = 'block';
+        document.querySelector('.landscape-timer').style['display'] = 'block';
         startMaze();
     } else {
         timer.style['display'] = 'none';
+        document.querySelector('.landscape-timer').style['display'] = 'none';
     }
 }
 

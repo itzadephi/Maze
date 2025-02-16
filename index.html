@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Maze Game</title>
     <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -42,6 +42,7 @@
                 
             </table>
             <p class="timer">Waktu tersisa: <span id="time-left"></span></p>
+            <p class="landscape-timer"><span id="hr-time-left"></span></p>
         </div>
         <div class="mobile-movepad2">
             <button class="movepad-button" onclick="checkPlayerActions({'key': 'a'})"><b>&larr;</b></button>
@@ -61,17 +62,17 @@
             <br>
             <br>
 
-            <input id="show-trail" class="pointer" type="checkbox" onchange="showTrailChange()" checked><label for="show-trail">Tampilkan jejak</label></a>
+            <input id="show-trail" class="pointer" type="checkbox" onchange="showTrailChange()" checked><label for="show-trail">Tampilkan jejak</label></input>
             <br>
             <br>
 
             <input id="timed-mode" class="pointer" type="checkbox" onchange="timedModeChange()"><label for="timed-mode">Mode waktu</label></input>
             <br>
+
+            <input type="button"  id="show-hint" onclick="playHint()" draggable="false"><label for="show-hint" class="fa fa-play-circle pointer" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Putar bantuan</label></input>
             <br>
-            
-            <a class="fa fa-play-circle pointer" style="display: block;" id="show-hint" onclick="playHint()" draggable="false"><label for="show-hint">Putar bantuan</label></a>
-            <br>
-            <a class="fa fa-refresh pointer" style="display: block;" id="restart" onclick="startMaze()" draggable="false"><label for="restart">Mulai ulang</label></a>
+
+            <input type="button"  id="restart" onclick="startMaze()" draggable="false"><label for="restart" class="fa fa-refresh pointer" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Mulai ulang</label></input>
         </div>
     </div>
     
