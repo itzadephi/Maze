@@ -74,6 +74,10 @@ input[type="button"] {
     opacity: 1;
 }
 
+.dont-zoom {
+    touch-action: manipulation;
+}
+
 .maze {
     flex-grow: 0;
     min-width: max-content;

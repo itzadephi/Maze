@@ -19,10 +19,10 @@
                 </div>
             </div>
             <div class="mobile-movepad">
-                <button class="movepad-button" onclick="checkPlayerActions({'key': 'w'})"><b>&uarr;</b></button>
-                <button class="movepad-button" onclick="checkPlayerActions({'key': 's'})"><b>&darr;</b></button>
-                <button class="movepad-button" onclick="checkPlayerActions({'key': 'a'})"><b>&larr;</b></button>
-                <button class="movepad-button" onclick="checkPlayerActions({'key': 'd'})"><b>&rarr;</b></button>
+                <button class="movepad-button dont-zoom" onclick="checkPlayerActions({'key': 'w'})"><b class="dont-zoom">&uarr;</b></button>
+                <button class="movepad-button dont-zoom" onclick="checkPlayerActions({'key': 's'})"><b class="dont-zoom">&darr;</b></button>
+                <button class="movepad-button dont-zoom" onclick="checkPlayerActions({'key': 'a'})"><b class="dont-zoom">&larr;</b></button>
+                <button class="movepad-button dont-zoom" onclick="checkPlayerActions({'key': 'd'})"><b class="dont-zoom">&rarr;</b></button>
             </div>
         </div>
         <div style="position: relative;">
@@ -45,10 +45,10 @@
             <p class="landscape-timer"><span id="hr-time-left"></span></p>
         </div>
         <div class="mobile-movepad2">
-            <button class="movepad-button" onclick="checkPlayerActions({'key': 'a'})"><b>&larr;</b></button>
-            <button class="movepad-button" onclick="checkPlayerActions({'key': 'w'})"><b>&uarr;</b></button>
-            <button class="movepad-button" onclick="checkPlayerActions({'key': 's'})"><b>&darr;</b></button>
-            <button class="movepad-button" onclick="checkPlayerActions({'key': 'd'})"><b>&rarr;</b></button>
+            <button class="movepad-button dont-zoom" onclick="checkPlayerActions({'key': 'a'})"><b class="dont-zoom">&larr;</b></button>
+            <button class="movepad-button dont-zoom" onclick="checkPlayerActions({'key': 'w'})"><b class="dont-zoom">&uarr;</b></button>
+            <button class="movepad-button dont-zoom" onclick="checkPlayerActions({'key': 's'})"><b class="dont-zoom">&darr;</b></button>
+            <button class="movepad-button dont-zoom" onclick="checkPlayerActions({'key': 'd'})"><b class="dont-zoom">&rarr;</b></button>
         </div>
         <div class="settings" draggable="false">
             <p class="move-guide">Gunakan <code>W</code> <code>A</code> <code>S</code> <code>D</code> atau <code>&uarr;</code> <code>&larr;</code> <code>&darr;</code> <code>&rarr;</code> untuk bergerak.</p>
@@ -58,21 +58,21 @@
             <br>
             <br>
 
-            <input id="skip-anim" class="pointer" type="checkbox" onchange="skipAnimChange()"><label for="skip-anim">Lewati animasi</label></option>
+            <input id="skip-anim" class="pointer dont-zoom" type="checkbox" onchange="skipAnimChange()"><label for="skip-anim">Lewati animasi</label></option>
             <br>
             <br>
 
-            <input id="show-trail" class="pointer" type="checkbox" onchange="showTrailChange()" checked><label for="show-trail">Tampilkan jejak</label></input>
+            <input id="show-trail" class="pointer dont-zoom" type="checkbox" onchange="showTrailChange()" checked><label for="show-trail">Tampilkan jejak</label></input>
             <br>
             <br>
 
-            <input id="timed-mode" class="pointer" type="checkbox" onchange="timedModeChange()"><label for="timed-mode">Mode waktu</label></input>
+            <input id="timed-mode" class="pointer dont-zoom" type="checkbox" onchange="timedModeChange()"><label for="timed-mode">Mode waktu</label></input>
             <br>
 
-            <input type="button"  id="show-hint" onclick="playHint()" draggable="false"><label for="show-hint" class="fa fa-play-circle pointer" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Putar bantuan</label></input>
+            <input type="button"  id="show-hint dont-zoom" onclick="playHint()" draggable="false"><label for="show-hint" class="fa fa-play-circle pointer" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Putar bantuan</label></input>
             <br>
 
-            <input type="button"  id="restart" onclick="startMaze()" draggable="false"><label for="restart" class="fa fa-refresh pointer" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Mulai ulang</label></input>
+            <input type="button"  id="restart dont-zoom" onclick="startMaze()" draggable="false"><label for="restart" class="fa fa-refresh pointer" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Mulai ulang</label></input>
         </div>
     </div>
     
